@@ -1,19 +1,8 @@
 Rails.application.routes.draw do
-
-  get 'bids/new'
-
-  get 'bids/index'
-
-  get 'bids/show'
-
-  get 'bids/create'
-
-  get 'bids/destroy'
-
-  get 'bids/update'
-
   root "auctions#index"
-  resources :auctions
+  resources :auctions do
+    resources :bids
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

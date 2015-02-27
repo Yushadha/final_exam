@@ -1,6 +1,5 @@
 class BidsController < ApplicationController
   def new
-    
   end
 
   def index

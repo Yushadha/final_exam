@@ -1,14 +1,15 @@
-<% @auction.each do |auction| %>
-	<h3>Title:</h3>
-	<%= auction.title %>
-	<br>
+
+	<h2><%= @auction.title %></h2>
+	<hr>
 	<h3>Details:</h3>
-	<%= auction.detail %>
+	<%= @auction.detail %>
 	<br>
 	<h3>Ending Date:</h3>
-	<%= auction.ends_on %>
+	<%= @auction.ends_on %>
 	<br>
 	<h3>Reserve Price:</h3>
-	<%= auction.reserve_price %>
+	<%= @auction.reserve_price %>
+	<br>
+	<%= link_to "edit", edit_auction_path(@auction) %>
+	<%= link_to "delete", auction_path(@auction), method: :delete %>
 	<hr>
-<% end %>
