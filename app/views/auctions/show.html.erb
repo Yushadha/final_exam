@@ -1,0 +1,14 @@
+<% @auction.each do |auction| %>
+	<h3>Title:</h3>
+	<%= auction.title %>
+	<br>
+	<h3>Details:</h3>
+	<%= auction.detail %>
+	<br>
+	<h3>Ending Date:</h3>
+	<%= auction.ends_on %>
+	<br>
+	<h3>Reserve Price:</h3>
+	<%= auction.reserve_price %>
+	<hr>
+<% end %>
