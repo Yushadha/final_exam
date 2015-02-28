@@ -22,10 +22,12 @@ class AuctionsController < ApplicationController
 		find_auction
 		@bid_new = Bid.new
 		@bids = @auction.bids
-		@current_price = @auction.bids.maximum("bid") + 1
-		if @current_price >= @auction.reserve_price
+		
+		@current_price = @auction.try(:bids).maximum(:bid)
+		@current_price = @current_price + 1 if @current_price
+		if @current_price && @current_price >= @auction.reserve_price
 			@reserve_met = "reserve has been met"
-			else
+		else
 			@reserve_met = "reserve has not been met"
 		end
 	end
