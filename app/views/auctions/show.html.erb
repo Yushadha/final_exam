@@ -8,8 +8,27 @@
 	<%= @auction.ends_on %>
 	<br>
 	<h3>Reserve Price:</h3>
-	<%= @auction.reserve_price %>
+	<%= @reserve_met %>
 	<br>
+	<h3>Current Price:</h3>
+	<%= @current_price  %>
+	<br>
+	<hr>
 	<%= link_to "edit", edit_auction_path(@auction) %>
 	<%= link_to "delete", auction_path(@auction), method: :delete %>
 	<hr>
+	<h2>Bids</h2>
+
+	<% @bids.each do |bid| %>
+		<%= bid.bid %> " at " <%= bid.created_at %>
+		<br>
+	<% end %>
+	
+	<%= form_for Bid.new, url:auction_bids_path(@auction), method: :post do |f| %>
+		<%= f.label :bid %>
+		<%= f.number_field :bid %>
+		<br>
+		<%= f.submit %>
+		<%= f.button "Reset", type: :reset %>
+	<% end %>
+	

@@ -20,6 +20,14 @@ class AuctionsController < ApplicationController
 
 	def show
 		find_auction
+		@bid_new = Bid.new
+		@bids = @auction.bids
+		@current_price = @auction.bids.maximum("bid") + 1
+		if @current_price >= @auction.reserve_price
+			@reserve_met = "reserve has been met"
+			else
+			@reserve_met = "reserve has not been met"
+		end
 	end
 
 	def destroy

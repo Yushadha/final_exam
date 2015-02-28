@@ -1,5 +1,7 @@
 class BidsController < ApplicationController
+  
   def new
+    @bid_new = Bid.new
   end
 
   def index
@@ -8,7 +10,12 @@ class BidsController < ApplicationController
   def show
   end
 
-  def create
+  def create 
+    @auction = Auction.find(params[:auction_id])
+    @bid_new = Bid.new bid_params
+    @bid_new.auction = @auction
+    @bid_new.save
+    redirect_to auction_path(@auction)
   end
 
   def destroy
@@ -16,4 +23,15 @@ class BidsController < ApplicationController
 
   def update
   end
+
+  private
+  
+  def bid_params
+    params.require(:bid).permit(:bid, :created_at, :auction, :user)
+  end
+
+  def find_bid
+    @bid = Bid.find params[:id]
+  end
+
 end
