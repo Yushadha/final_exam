@@ -1,17 +1,15 @@
 class Bid < ActiveRecord::Base
 	belongs_to :auction
-	# validates_numericality_of :bid, greater_than_or_equal_to: Bid.maximum(self.auction_id)
+	validate :is_new_maximum?, on: :create
 
-	# def self.maximum(auction_id)
-	# 	array = Bid.where(auction_id: auction_id).pluck(:bid)
-	# 	max = array.first
+	scope :highest, ->(auction_id) { where(auction_id: auction_id).maximum(:bid) }
+	
+	def is_new_maximum?
+		max_bid = Bid.highest(self.auction_id)
 
-	# 	array.each do |b|
-	# 		if b >= max 
-	# 			max = b
-	# 		end
-	# 	end
+		if self.bid < max_bid + 1
+			errors.add(:bid, "is not the new highest for this auction")
+		end
+	end
 
-	# 	return max
-	# end
 end

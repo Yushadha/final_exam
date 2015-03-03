@@ -11,10 +11,15 @@ class BidsController < ApplicationController
   end
 
   def create 
+    @bid = Bid.all
     @auction = Auction.find(params[:auction_id])
     @bid_new = Bid.new bid_params
     @bid_new.auction = @auction
-    @bid_new.save
+    if @bid.where(auction_id: @auction.id).count != 0 && @bid_new.bid > @bid.where(auction_id: @auction.id).maximum(:bid)
+      @bid_new.save
+      else @bid.where(auction_id: @auction.id).last == nil
+      @bid_new.save
+    end
     redirect_to auction_path(@auction)
   end
 
